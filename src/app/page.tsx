@@ -1,5 +1,6 @@
 import Image from "next/image";
 import InkFlowLogo from "../../public/Logo.svg";
+import { useForm } from "react-hook-form";
 
 export default function Home() {
   return (
