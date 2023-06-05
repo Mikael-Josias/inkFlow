@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <body className={robotoCondensed.className}>{children}</body>
+      <body className={robotoCondensed.className} suppressHydrationWarning={true}>{children}</body>
     </html>
   )
 }
