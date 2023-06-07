@@ -3,12 +3,12 @@ import { useAsync } from "../useAsync";
 
 export const useSignUp = () => {
   const {
-    error: signUpError,
+    loading: signUpLoading,
     act: signUpAct
   } = useAsync(signUpUser)
 
   return {
-    signUpError,
+    signUpLoading,
     signUpAct
   }
 }

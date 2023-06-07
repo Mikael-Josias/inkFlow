@@ -5,12 +5,18 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Sign from "@/layouts/sign";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
+import ButtonSpinner from "@/components/buttonSpinner";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignUp() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors }} = useForm();
-  const { signUpAct } = useSignUp();
+  const { signUpAct, signUpLoading } = useSignUp();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showVerifyPassword, setShowVerifyPassword] = useState(false);
 
   console.log(errors)
   const submit = async (data: any) => {
@@ -47,16 +53,29 @@ export default function SignUp() {
           { errors?.email && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Email é obrigatório</span>}
         </label>
         <label className="relative">
-          <input {...register("password", {required: true, minLength: 8})} type="password" placeholder="Senha"  className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          <input {...register("password", {required: true, minLength: 8})} type={showPassword ? "text" : "password"} placeholder="Senha"  className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          {showPassword ?
+            <Eye className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowPassword(!showPassword)}/>
+            :
+            <EyeOff className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowPassword(!showPassword)}/>
+          }
           { errors?.password?.type === "required" && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Senha é obrigatório</span>}
           { errors?.password?.type === "minLength" && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Senha deve ter pelo menos 8 caracteres</span>}
         </label>
         <label className="relative">
-          <input {...register("verifyPassword", {required: true})} type="password" placeholder="Verifique a senha" className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          <input {...register("verifyPassword", {required: true})} type={showVerifyPassword ? "text" : "password"} placeholder="Verifique a senha" className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          {showVerifyPassword ?
+            <Eye className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowVerifyPassword(!showVerifyPassword)}/>
+            :
+            <EyeOff className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowVerifyPassword(!showVerifyPassword)}/>
+          }
           { errors?.verifyPassword && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Verificar a senha é obrigatório</span>}
         </label>
 
-        <input type="submit" value="CADASTRAR" className="h-8 bg-blue-500 mt-10 text-white font-bold rounded-md cursor-pointer hover:bg-blue-500/90 transition-colors" />
+        <div className="h-8 mt-10 rounded-md relative">
+          { signUpLoading && <ButtonSpinner/>}
+          <input type="submit" value={signUpLoading ? "" : "CADASTRAR"} className="h-full w-full bg-blue-500 text-white font-bold rounded-md cursor-pointer hover:bg-blue-500/90 transition-colors" />
+        </div>
       </form>
       <div className="w-full text-center ">
         <span className="text-white-600">Já possui uma conta? <Link href="/signin" className="text-blue-500 cursor-pointer">faça login!</Link></span>
