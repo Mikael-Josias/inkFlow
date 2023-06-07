@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --toastify-toast-text-color: #fff;
+  --toastify-toast-background: #292929;
+  --toastify-color-progress-light: #58abd8;
+}
+
+.Toastify__toast {
+  color: var(--toastify-toast-text-color);
+  background-color: var(--toastify-toast-background);
+}
+
+.Toastify__close-button {
+  color: var(--toastify-toast-text-color);
+}
