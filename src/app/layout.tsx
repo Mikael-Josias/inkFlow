@@ -1,5 +1,6 @@
-import './globals.css'
 import { Roboto_Condensed } from 'next/font/google'
+import 'react-toastify/dist/ReactToastify.css';
+import './globals.css'
 
 const robotoCondensed = Roboto_Condensed({ weight: ['300', '400', '700'], subsets: ['latin'], style: ['normal']})
 
