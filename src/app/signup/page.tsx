@@ -5,14 +5,18 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Sign from "@/layouts/sign";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import ButtonSpinner from "@/components/buttonSpinner";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignUp() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors }} = useForm();
   const { signUpAct, signUpLoading } = useSignUp();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showVerifyPassword, setShowVerifyPassword] = useState(false);
 
   console.log(errors)
   const submit = async (data: any) => {
@@ -49,12 +53,22 @@ export default function SignUp() {
           { errors?.email && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Email é obrigatório</span>}
         </label>
         <label className="relative">
-          <input {...register("password", {required: true, minLength: 8})} type="password" placeholder="Senha"  className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          <input {...register("password", {required: true, minLength: 8})} type={showPassword ? "text" : "password"} placeholder="Senha"  className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          {showPassword ?
+            <Eye className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowPassword(!showPassword)}/>
+            :
+            <EyeOff className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowPassword(!showPassword)}/>
+          }
           { errors?.password?.type === "required" && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Senha é obrigatório</span>}
           { errors?.password?.type === "minLength" && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Senha deve ter pelo menos 8 caracteres</span>}
         </label>
         <label className="relative">
-          <input {...register("verifyPassword", {required: true})} type="password" placeholder="Verifique a senha" className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          <input {...register("verifyPassword", {required: true})} type={showVerifyPassword ? "text" : "password"} placeholder="Verifique a senha" className="w-[400px] h-[30px] text-white-600 border-white-600 border-b-[1px] outline-none"/>
+          {showVerifyPassword ?
+            <Eye className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowVerifyPassword(!showVerifyPassword)}/>
+            :
+            <EyeOff className="text-white-400 h-4 absolute right-0 top-1/4 cursor-pointer" onClick={() => setShowVerifyPassword(!showVerifyPassword)}/>
+          }
           { errors?.verifyPassword && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Verificar a senha é obrigatório</span>}
         </label>
 
