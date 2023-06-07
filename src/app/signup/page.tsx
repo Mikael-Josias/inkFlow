@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 import Sign from "@/layouts/sign";
 import Link from "next/link";
 import { useEffect } from "react";
+import { ThreeDots } from "react-loader-spinner";
+import ButtonSpinner from "@/components/buttonSpinner";
 
 export default function SignUp() {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors }} = useForm();
-  const { signUpAct } = useSignUp();
+  const { signUpAct, signUpLoading } = useSignUp();
 
   console.log(errors)
   const submit = async (data: any) => {
@@ -56,7 +58,10 @@ export default function SignUp() {
           { errors?.verifyPassword && <span className="text-sm text-red-500 absolute bottom-[-25px] left-0">*Verificar a senha é obrigatório</span>}
         </label>
 
-        <input type="submit" value="CADASTRAR" className="h-8 bg-blue-500 mt-10 text-white font-bold rounded-md cursor-pointer hover:bg-blue-500/90 transition-colors" />
+        <div className="h-8 mt-10 rounded-md relative">
+          { signUpLoading && <ButtonSpinner/>}
+          <input type="submit" value={signUpLoading ? "" : "CADASTRAR"} className="h-full w-full bg-blue-500 text-white font-bold rounded-md cursor-pointer hover:bg-blue-500/90 transition-colors" />
+        </div>
       </form>
       <div className="w-full text-center ">
         <span className="text-white-600">Já possui uma conta? <Link href="/signin" className="text-blue-500 cursor-pointer">faça login!</Link></span>
