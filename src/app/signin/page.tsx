@@ -26,6 +26,7 @@ export default function SignIn() {
           const data = await signInAct({email, password});
           const user = decode(data);
           localStorage.setItem('session', JSON.stringify(user));
+          localStorage.setItem('token', data);
           router.push("dashboard");
         } catch (error) {
           toast('Erro ao realizar o login!');
