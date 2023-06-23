@@ -8,6 +8,7 @@ import { useState } from "react";
 import ButtonSpinner from "@/components/buttonSpinner";
 import { useSignIn } from "@/hooks/api/useSignIn";
 import { ToastContainer, toast } from "react-toastify";
+import decode from 'jwt-decode';
 
 export default function SignIn() {
     const router = useRouter();
@@ -23,6 +24,8 @@ export default function SignIn() {
         } = data;
         try {
           const data = await signInAct({email, password});
+          const user = decode(data);
+          localStorage.setItem('session', JSON.stringify(user));
           router.push("dashboard");
         } catch (error) {
           toast('Erro ao realizar o login!');
