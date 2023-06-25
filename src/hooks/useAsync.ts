@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 
 
-export const useAsync = (handler: any, immediate: boolean = false) => {
-  const [data, setData] = useState<any>(null)
+export const useAsync = <T>(handler: any, immediate: boolean = false) => {
+  const [data, setData] = useState<T>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<any>(null)
 

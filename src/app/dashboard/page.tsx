@@ -6,6 +6,12 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
 import { useDocuments } from "@/hooks/api/useDocuments";
 
+type DocumentType = {
+  _id: string,
+  title: string,
+  data: object | string,
+}
+
 type documentType = {
   _id: string,
   userId: string,
@@ -17,7 +23,7 @@ export default function Dashboard() {
   const router = useRouter();
 
   const [session, setSession] = useState<any>()
-  const { documentsData, documentsLoading } = useDocuments()
+  const { documentsData, documentsLoading } = useDocuments<DocumentType[]>()
   
   useEffect(() => {
     const sessionData = JSON.parse(localStorage.getItem('session') || '{}')
