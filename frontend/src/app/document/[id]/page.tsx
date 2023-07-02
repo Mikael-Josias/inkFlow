@@ -23,16 +23,15 @@ export default function Document () {
   const [quill, setQuill] = useState<Quill>()
 
   useEffect(() => {
-    const s = io(`${process.env.NEXT_PUBLIC_API_BASE_URL}`)
+    const s = io(`${process.env.NEXT_PUBLIC_API_SOCKET_BASE_URL}`)
     setSocket(s)
     return () => {
-      s.disconnect()
+      s?.disconnect()
     }
   }, [])
 
   useEffect(() => {
     if (socket === null || quill === null) return
-
     const interval = setInterval(() => {
       socket?.emit('save-document', {id: documentId, title: documentTitle, data: quill?.getContents()})
 

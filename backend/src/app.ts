@@ -14,6 +14,7 @@ app.use(express.json())
 
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
+  path: '/socket.io',
   cors: {
     origin: true,
     methods: ['GET', 'POST']
