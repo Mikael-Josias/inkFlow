@@ -25,7 +25,8 @@ services:
     container_name: nginx
     build: ./nginx
     ports:
-      - 8080:80
+      - 80:80
+      - 433:433
     depends_on:
       - next_app
 volumes:
